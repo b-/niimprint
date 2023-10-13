@@ -1,7 +1,7 @@
 import PIL.Image as Image
 import PIL.ImageOps as ImageOps
 import struct
-import niimbotpacket
+from niimprint import niimbotpacket
 import sys
 
 if sys.version_info.minor >= 10:

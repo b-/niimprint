@@ -1,6 +1,6 @@
 import argparse
-import printerclient
-import printencoder
+from niimprint import printerclient
+from niimprint import printencoder
 
 from PIL import Image, ImageDraw , ImageDraw2
 import time
