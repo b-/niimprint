@@ -1,9 +1,14 @@
+'''
+Niimbot printer client
+'''
 import argparse
+import time
+
+from PIL import Image
+
 from niimprint import printerclient
 from niimprint import printencoder
 
-from PIL import Image
-import time
 
 # import math
 # mm_to_px = lambda x: math.ceil(x / 25.4 * 203)
@@ -23,7 +28,7 @@ if __name__ == '__main__':
     img = Image.open(args.image)
     if img.width / img.height > 1:
         # rotate clockwise 90deg, upper line (left line) prints first.
-        img = img.transpose(Image.ROTATE_270)
+        img = img.rotate(270)
     assert args.no_check or (img.width == 96 and img.height < 600)
 
     printer = printerclient.PrinterClient(args.address)

@@ -1,14 +1,17 @@
+'''
+Niimbot printer client that prints text
+'''
 import argparse
+import time
+from PIL import Image, ImageDraw2
 from niimprint import printerclient
 from niimprint import printencoder
 
-from PIL import Image, ImageDraw , ImageDraw2
-import time
 
 # import math
 # mm_to_px = lambda x: math.ceil(x / 25.4 * 203)
 # px_to_mm = lambda x: math.ceil(x / 25.4 * 203)
-briosk = "/var/home/bri/Downloads/fonts/dist/briosk-proportional/ttf/briosk-proportional-regular.ttf"
+BRIOSK_TTF = "~/Downloads/fonts/dist/briosk-proportional/ttf/briosk-proportional-regular.ttf"
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -20,7 +23,7 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--quantity', type=int, default=1, help="Number of copies")
     parser.add_argument('-f', '--foreground', default="white", help="foreground color")
     parser.add_argument('-b', '--background', default="black", help="background color")
-    parser.add_argument('--font', default=briosk, help="font")
+    parser.add_argument('--font', default=BRIOSK_TTF, help="font")
     parser.add_argument('--size', default=50, type=int, help="font size in pixels")
     parser.add_argument('-x', default=5, type=int, help="x margin")
     parser.add_argument('-y', default=5, type=int, help="y margin")
@@ -33,9 +36,9 @@ if __name__ == '__main__':
     draw.text(text=args.text, xy=(args.x,args.y), font=font)
     if img.width / img.height > 1:
         # rotate clockwise 90deg, upper line (left line) prints first.
-        img = img.transpose(Image.ROTATE_270)
+        img = img.rotate(270)
     else:
-        img= img.transpose(Image.ROTATE_90)
+        img = img.rotate(90)
     assert args.no_check or (img.width == 96 and img.height < 600)
 
     printer = printerclient.PrinterClient(args.address)
